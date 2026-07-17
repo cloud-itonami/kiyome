@@ -1,0 +1,15 @@
+{:schema-version 1
+ :repository "etzhayyim/com-etzhayyim-kiyome"
+ :classification :actor
+ :canonical-actor-metadata "manifest.edn"
+ :canonical-data-format :edn
+ :actor-owned-contracts ["kiyome/lex/cleaningPassAttestation.edn"
+                         "kiyome/lex/linenLotAttestation.edn"
+                         "kiyome/lex/sanitizationRecord.edn"
+                         "kiyome/lex/siteAssessmentRecord.edn"
+                         "kiyome/lex/wasteSegregationRecord.edn"]
+ :dependencies []
+ :external-wire-formats #{}
+ :tests {:command ["bb" "run_tests.clj"]
+         :count 10
+         :assertions 35}}
