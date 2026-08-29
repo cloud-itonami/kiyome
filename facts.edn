@@ -1,0 +1,70 @@
+;; facts.edn — external classification sources this actor's own claims rest on.
+;;
+;; README.md says: "ISIC T/N81 · ISCO 9111/9112 · UNSPSC 76". Until this file
+;; existed, none of those three codes had a citation anywhere in this
+;; repository -- a reader had to trust the acronym string. This is that
+;; citation list, and only for what could actually be fetched: several ILO
+;; domains (ilo.org, ilostat.ilo.org, webapps.ilo.org) and unspsc.org
+;; returned HTTP 403 to every request tried here on 2026-08-29, including
+;; with a browser User-Agent -- bot-protected, not absent. Per this
+;; workspace's own rule (safety floor: no CAPTCHA/bot-detection evasion),
+;; nothing was done to get past that, so ISCO-08 (:source/id :isco/isco-08)
+;; and UNSPSC have NO verified :source/url here. Extend this table when
+;; those hosts answer, rather than inventing a URL for them now.
+;;
+;; Shape is tx-data (a vector of entity maps), like every other EDN corpus in
+;; this workspace: (d/transact conn (edn/read-string (slurp "facts.edn"))).
+;; :source/id is the join key.
+;;
+;; Every :source/url below was fetched directly (curl, no proxy, no UA
+;; spoofing beyond an ordinary browser string) on 2026-08-29 and returned
+;; HTTP 200. Re-verify before trusting an old copy of this file.
+
+[{:source/id :isic/portal
+  :source/url "https://unstats.un.org/unsd/classifications/Econ/isic"
+  :source/verify :http-200
+  :source/role "UN Statistics Division's ISIC classification portal — the
+                authority for the 'ISIC T/N81' claim in README.md. Section T
+                is 'Activities of households as employers'; class 9700
+                (household employees, referenced elsewhere in this fleet as
+                the ISIC Rev.4 code for domestic workers) sits under it.
+                N81 is the corresponding non-household (janitorial/building
+                services) branch README.md also names."}
+
+ {:source/id :isic/rev4-publication
+  :source/url "https://unstats.un.org/unsd/classifications/Econ/Download/In%20Text/ISIC_Rev_4_publication_English.pdf"
+  :source/verify :http-200
+  :source/role "Full ISIC Rev.4 structure and explanatory notes (PDF). Where
+                :isic/portal names the section, this document is the
+                structure and class definitions themselves."}
+
+ {:source/id :isic/statistical-papers-series-m
+  :source/url "https://unstats.un.org/unsd/publication/seriesM/seriesm_4rev4e.pdf"
+  :source/verify :http-200
+  :source/role "The same ISIC Rev.4 text as published in the UN Statistical
+                Papers Series M — a second, independently-hosted copy of the
+                same standard (different byte size: 1,088,185 vs.
+                1,104,973 bytes measured 2026-08-29, so this is not a
+                duplicate fetch of :isic/rev4-publication, though the
+                underlying standard is the same one)."}
+
+ {:source/id :isco/isco-08
+  :source/url nil
+  :source/verify :unreachable-2026-08-29
+  :source/role "README.md's 'ISCO 9111/9112' claim (9111 domestic
+                housekeepers, 9112 cleaners and helpers in offices, hotels
+                and other establishments, per ISCO-08's own published
+                structure). No citation here: ilo.org, ilostat.ilo.org and
+                webapps.ilo.org all returned HTTP 403 to every path tried
+                (the ISCO-08 landing page, the concepts-and-definitions
+                page, and a direct PDF path), including with a
+                Mozilla/Chrome User-Agent. Bot-protected, not absent --
+                do not read the missing URL as the claim being wrong."}
+
+ {:source/id :unspsc/portal
+  :source/url nil
+  :source/verify :unreachable-2026-08-29
+  :source/role "README.md's 'UNSPSC 76' claim (segment 76 = Cleaning
+                Equipment and Supplies / Building and Facility Maintenance
+                Services). unspsc.org returned HTTP 403 to every request
+                tried here on 2026-08-29, browser User-Agent included."}]
