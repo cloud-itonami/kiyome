@@ -107,22 +107,34 @@ failed in front of you is indistinguishable from a suite that cannot fail.
 cp -R . /tmp/kiyome-scratch && cd /tmp/kiyome-scratch
 sed -i '' 's/:biometricCapture {:type "boolean" :const false/:biometricCapture {:type "boolean" :const true/' \
   kiyome/lex/siteAssessmentRecord.edn
-clojure -Sdeps '{:paths ["."]}' -M -e "(require 'clojure.test 'kiyome.methods.test-charter-gates)(clojure.test/run-tests 'kiyome.methods.test-charter-gates)"
+clojure -Sdeps '{:paths ["."]}' -M -e "(require 'clojure.test 'kiyome.methods.test-charter-gates 'kiyome.cells.surface-cleaning.test-state-machine)(let [r (clojure.test/run-tests 'kiyome.methods.test-charter-gates 'kiyome.cells.surface-cleaning.test-state-machine)] (System/exit (if (zero? (+ (:fail r) (:error r))) 0 1)))"
+echo "EXIT=$?"
 cd - && rm -rf /tmp/kiyome-scratch
 ```
 
-Measured here: exactly one assertion turns red —
+Measured here on 2026-08-29: `EXIT=1`, and exactly one assertion turns red —
 
 ```
 FAIL in (g9-privacy-on-device-no-imagery) (test_charter_gates.cljc:47)
+G9: siteAssessment.biometricCapture const false
 expected: (= false (const-of s :biometricCapture))
   actual: (not (= false true))
 Ran 10 tests containing 35 assertions.
-1 failure
+1 failures, 0 errors.
 ```
 
 Check that the failure names the thing you broke. A red suite caused by something
 other than your edit is not a demonstration that the check works.
+
+**The `System/exit` in that command is load-bearing.** `clojure.test/run-tests`
+reports failures on stdout but returns normally, so a bare
+`-M -e "...(run-tests ...)"` exits **0 with a red suite** — measured here while
+walking this document, which is how the earlier draft of this step came to quote the
+wrong output. Anything that reads the exit code (CI, a shell `&&` chain, a gate)
+would have recorded that red run as a pass. Keep the `System/exit`, and keep the
+`echo "EXIT=$?"` on its own line rather than piping the command anywhere: `$?` is
+the exit status of the *last* command in a pipeline, so `... | tail` would report
+`tail`'s 0 no matter what the suite did.
 
 ## 5. Verify the privacy gate yourself, and see its exact scope
 
