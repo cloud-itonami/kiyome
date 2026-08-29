@@ -15,9 +15,19 @@ acts available (gate **G6**).
 
 Cleaning means entering homes. Gate **G9** makes kiyome the opposite of a surveillance product:
 on-device only, **no cloud imagery, no sensor feed, no biometric/facial recognition** — enforced as
-hard `const` invariants in the lexicons (`onDeviceOnly: true`, `imageryRetained: false`,
-`biometricCapture: false`). Displaced cleaners are registered for the tenure-weighted Displacement
+hard `const` invariants in two of the five lexicons — `cleaningPassAttestation`
+(`onDeviceOnly: true`, `imageryRetained: false`) and `siteAssessmentRecord`
+(`onDeviceOnly: true`, `biometricCapture: false`) — and at runtime by the
+`surface_cleaning` state machine, which refuses to log a pass when `on_device_only`
+is false. `sanitizationRecord` and `wasteSegregationRecord` carry a `siteId` but no
+on-device invariant yet; see `docs/operator-quickstart.md` § 5 for the measured table. Displaced cleaners are registered for the tenure-weighted Displacement
 Dividend (ADR-2606032130, gate **G2**).
+
+## Running it
+
+R0 means there is nothing to deploy. What you can actually do — read the corpus, run
+the 10-test conformance suite, and watch it go red on a seeded G9 regression — is in
+**`docs/operator-quickstart.md`**.
 
 ## Honest
 
