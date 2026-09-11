@@ -64,7 +64,7 @@ cat > /tmp/kiyome-edn-check.cljs <<'EOF'
 (println (if (seq @bad) "FAIL" "OK"))
 (.exit js/process (if (seq @bad) 1 0))
 EOF
-nbb /tmp/kiyome-edn-check.cljs
+kbb --backend sci /tmp/kiyome-edn-check.cljk
 ```
 
 Expected on a clean tree: `EDN-SCANNED 16` then `OK`, exit 0. If the scanned count
@@ -86,12 +86,12 @@ Either command runs the same two suites and must print
 
 ```bash
 # No babashka required (preferred — see "Known gaps" below):
-clojure -Sdeps '{:paths ["."]}' -M -e "(require 'clojure.test 'kiyome.methods.test-charter-gates 'kiyome.cells.surface-cleaning.test-state-machine)(let [r (clojure.test/run-tests 'kiyome.methods.test-charter-gates 'kiyome.cells.surface-cleaning.test-state-machine)] (System/exit (if (zero? (+ (:fail r) (:error r))) 0 1)))"
+kbb -Sdeps '{:paths ["."]}' -M -e "(require 'clojure.test 'kiyome.methods.test-charter-gates 'kiyome.cells.surface-cleaning.test-state-machine)(let [r (clojure.test/run-tests 'kiyome.methods.test-charter-gates 'kiyome.cells.surface-cleaning.test-state-machine)] (System/exit (if (zero? (+ (:fail r) (:error r))) 0 1)))"
 ```
 
 ```bash
 # The command repository-contracts.edn declares:
-bb run_tests.cljk
+kbb run_tests.cljk
 ```
 
 Both were run here on 2026-08-29 and both reported 10 tests / 35 assertions,
@@ -107,7 +107,7 @@ failed in front of you is indistinguishable from a suite that cannot fail.
 cp -R . /tmp/kiyome-scratch && cd /tmp/kiyome-scratch
 sed -i '' 's/:biometricCapture {:type "boolean" :const false/:biometricCapture {:type "boolean" :const true/' \
   kiyome/lex/siteAssessmentRecord.edn
-clojure -Sdeps '{:paths ["."]}' -M -e "(require 'clojure.test 'kiyome.methods.test-charter-gates 'kiyome.cells.surface-cleaning.test-state-machine)(let [r (clojure.test/run-tests 'kiyome.methods.test-charter-gates 'kiyome.cells.surface-cleaning.test-state-machine)] (System/exit (if (zero? (+ (:fail r) (:error r))) 0 1)))"
+kbb -Sdeps '{:paths ["."]}' -M -e "(require 'clojure.test 'kiyome.methods.test-charter-gates 'kiyome.cells.surface-cleaning.test-state-machine)(let [r (clojure.test/run-tests 'kiyome.methods.test-charter-gates 'kiyome.cells.surface-cleaning.test-state-machine)] (System/exit (if (zero? (+ (:fail r) (:error r))) 0 1)))"
 echo "EXIT=$?"
 cd - && rm -rf /tmp/kiyome-scratch
 ```
