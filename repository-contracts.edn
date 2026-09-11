@@ -10,6 +10,6 @@
                          "kiyome/lex/wasteSegregationRecord.edn"]
  :dependencies []
  :external-wire-formats #{}
- :tests {:command ["bb" "run_tests.clj"]
+ :tests {:command ["bb" "run_tests.cljk"]
          :count 10
          :assertions 35}}
