@@ -91,7 +91,7 @@ clojure -Sdeps '{:paths ["."]}' -M -e "(require 'clojure.test 'kiyome.methods.te
 
 ```bash
 # The command repository-contracts.edn declares:
-bb run_tests.clj
+bb run_tests.cljk
 ```
 
 Both were run here on 2026-08-29 and both reported 10 tests / 35 assertions,
@@ -162,7 +162,7 @@ only), so its absence is the expected one. This is a real gap in coverage, not a
 documentation nicety; see "Known gaps".
 
 Runtime enforcement is separate from the schema consts and is stronger where it
-exists: `kiyome/cells/surface_cleaning/state_machine.cljc` throws on a
+exists: `kiyome/cells/surface_cleaning/state_machine.cljk` throws on a
 `pass_logged` transition if `on_device_only` is false, and the same file bounds
 `method` to `#{"sweep" "vacuum" "mop" "wipe"}` — there is no recording or scanning
 verb a cleaning pass can express.
@@ -177,8 +177,8 @@ verb a cleaning pass can express.
 
 ## Known gaps (measured 2026-08-29, not fixed here)
 
-1. **`run_tests.clj` is a babashka script** (`#!/usr/bin/env bb`), and
-   `repository-contracts.edn` declares `["bb" "run_tests.clj"]` as *the* test
+1. **`run_tests.cljk` is a babashka script** (`#!/usr/bin/env bb`), and
+   `repository-contracts.edn` declares `["bb" "run_tests.cljk"]` as *the* test
    command. The workspace retired `bb` as a script host (ADR-2607173000). It still
    runs today, which is why it is documented above, but the `clojure` invocation in
    step 3 is the one that does not depend on a retired host. Neither the script nor
@@ -186,9 +186,9 @@ verb a cleaning pass can express.
 2. **`kiyome/cells/social_post/` is an unregistered cell.** It has a real coded
    state machine — the actor's publication membrane, which drafts posts toward the
    mesh / AT-proto — and it appears **zero** times in `manifest.edn`,
-   `run_tests.clj`, `repository-contracts.edn`, `README.md` and `CLAUDE.md`
+   `run_tests.cljk`, `repository-contracts.edn`, `README.md` and `CLAUDE.md`
    (measured with `grep -c`). So the one cell with outward reach is the one cell
-   nothing in this repo describes or tests. `run_tests.clj` loads only
+   nothing in this repo describes or tests. `run_tests.cljk` loads only
    `surface_cleaning` and the charter gates, so none of its R0 refusals
    (`no-server-key`, dry-run-only, ≥2 citations) is pinned by a test.
 3. **G9 covers two of five lexicons** — the table in step 5, with
