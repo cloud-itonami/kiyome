@@ -4,7 +4,7 @@
   privacy-by-construction hard invariants — G9 on-device-only + no-imagery-retained, N5 no-biometric
   — plus the cleaning-method allow-list and the G3 witness quorum (≥2 robot sigs + a human
   attestation)."
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [kiyome.cells.surface-cleaning.state-machine :as sm]))
 
 (defn- run-to-pass [overrides]
