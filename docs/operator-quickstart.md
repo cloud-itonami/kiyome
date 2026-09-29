@@ -74,7 +74,7 @@ that mismatch matters more than the `OK`.
 **Why the file content is wrapped in `[` `]`.** `edn/read-string` returns after the
 *first* form and ignores whatever follows. Appending a truncated map to the end of
 `manifest.edn` and reading it the obvious way still returns a value and still exits
-0 — measured here on 2026-08-29, and it is the same trap the workspace CLAUDE.md
+0 — measured here on 2026-08-29, and it is the same trap the workspace AGENTS.md
 records for heredoc-authored EDN. Wrapping forces every top-level form to be read.
 A corpus check that only reads the first form reports intact files and corrupt files
 identically.
@@ -186,7 +186,7 @@ verb a cleaning pass can express.
 2. **`kiyome/cells/social_post/` is an unregistered cell.** It has a real coded
    state machine — the actor's publication membrane, which drafts posts toward the
    mesh / AT-proto — and it appears **zero** times in `manifest.edn`,
-   `run_tests.cljk`, `repository-contracts.edn`, `README.md` and `CLAUDE.md`
+   `run_tests.cljk`, `repository-contracts.edn`, `README.md` and `AGENTS.md`
    (measured with `grep -c`). So the one cell with outward reach is the one cell
    nothing in this repo describes or tests. `run_tests.cljk` loads only
    `surface_cleaning` and the charter gates, so none of its R0 refusals

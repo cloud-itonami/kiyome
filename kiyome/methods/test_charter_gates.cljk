@@ -2,7 +2,7 @@
   "kiyome 清め — constitutional-gate conformance tests (local lexicons).
 
   Substrate-native Clojure (clj + datomic first tier). kiyome is domestic/janitorial cleaning
-  robotics. Its CLAUDE.md states the privacy gate G9 is a HARD INVARIANT in the lexicons:
+  robotics. Its AGENTS.md states the privacy gate G9 is a HARD INVARIANT in the lexicons:
   'on-device only, no cloud imagery, no surveillance feed, no biometric capture'. This suite pins
   the G9 privacy-by-construction gate (and the bounded cleaning vocabularies) across the
   first-tier `lex/*.edn` lexicons (read via clojure.edn) so a future R-phase cell wave cannot
